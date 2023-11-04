@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class Vente {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id_vente; 
 	
 	@Column(name="date_annulation")

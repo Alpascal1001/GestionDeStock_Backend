@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class Etatdecaisse {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id_etatcaisse;
 	
 	@Column(name="date_validation")

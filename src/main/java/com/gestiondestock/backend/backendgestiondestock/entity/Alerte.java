@@ -13,13 +13,13 @@ import jakarta.persistence.Table;
 public class Alerte {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id_alert;
 	
 	@Column(name="seuil_article")
 	float seuil_article;
 	
-	@Column(name="ombre_vente_annule")
+	@Column(name="nombre_vente_annule")
 	float nombre_vente_annule;
 	
 	@Column(name="fin_promo")
