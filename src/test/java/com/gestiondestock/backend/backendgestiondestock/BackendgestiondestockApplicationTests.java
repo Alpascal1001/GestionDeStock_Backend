@@ -1,5 +1,6 @@
 package com.gestiondestock.backend.backendgestiondestock;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,25 @@ class BackendgestiondestockApplicationTests {
 	@Test
 	public void testUpdateUser() {
 		Optional<User> user=userRepository.findById(4L);
-		System.out.println( "user by id : 10--->" + user.toString());
+		user.get().setNom("DIALLO");
+		user.get().setPrenom("Aziz");
+		userRepository.save(user.get());
+		
 	}
+	
+	
+	
+	@Test
+	public void  testListUser(){
+		List<User> users =userRepository.findAll();
+		if (users==null) {
+			return;
+		}else {
+		for (User u:users) {
+			System.out.println(u.toString());
+		}
+		}
+	}
+	
 
 }
