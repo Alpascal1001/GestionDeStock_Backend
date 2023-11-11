@@ -14,19 +14,19 @@ public class Alerte {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int id_alert;
+	private int id_alert;
 	
 	@Column(name="seuil_article")
-	float seuil_article;
+	private float seuil_article;
 	
 	@Column(name="nombre_vente_annule")
-	float nombre_vente_annule;
+	private float nombre_vente_annule;
 	
 	@Column(name="fin_promo")
-	Date fin_promo;
+	private Date fin_promo;
 	
 	@Column(name="id_USER")
-	int id_USER;
+	private int id_USER;
 
 	public Alerte() {
 		super();

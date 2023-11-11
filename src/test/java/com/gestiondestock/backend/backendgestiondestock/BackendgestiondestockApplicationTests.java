@@ -19,7 +19,7 @@ class BackendgestiondestockApplicationTests {
 	private UserRepository userRepository;
 	@Test
 	public void testCreateUser() {
-		User user1= new User("Drame", "Fatoumata", "grdyoff", "778773737", "admin", "fatouma@drame.com", "passer", "actif");
+		User user1= new User("Sene", "Makhoudia", "grdyoff", "778773737", "admin", "fatouma@drame.com", "passer", "actif");
 		userRepository.save(user1);
 	}
 	
@@ -31,7 +31,7 @@ class BackendgestiondestockApplicationTests {
 	
 	@Test
 	public void testUpdateUser() {
-		Optional<User> user=userRepository.findById(4L);
+		Optional<User> user=userRepository.findById(1L);
 		user.get().setNom("DIALLO");
 		user.get().setPrenom("Aziz");
 		userRepository.save(user.get());
