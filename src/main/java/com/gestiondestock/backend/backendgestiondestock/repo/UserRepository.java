@@ -1,3 +1,4 @@
+
 package com.gestiondestock.backend.backendgestiondestock.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;

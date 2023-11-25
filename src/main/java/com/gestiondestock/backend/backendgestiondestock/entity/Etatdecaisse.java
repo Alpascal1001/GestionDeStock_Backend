@@ -23,7 +23,7 @@ public class Etatdecaisse {
 	Date date_annulation;
 	
 	@Column(name="date_etatcaiise")
-	Date date_etatcaiise;
+	Date date_etatcaisse;
 	
 	@Column(name="etat")
 	String etat;
@@ -38,11 +38,11 @@ public class Etatdecaisse {
 		
 		
 	}
-	public Etatdecaisse(Date date_validation, Date date_annulation, Date date_etatcaiise, String etat) {
+	public Etatdecaisse(Date date_validation, Date date_annulation, Date date_etatcaisse, String etat) {
 		super();
 		this.date_validation = date_validation;
 		this.date_annulation = date_annulation;
-		this.date_etatcaiise = date_etatcaiise;
+		this.date_etatcaisse = date_etatcaisse;
 		this.etat = etat;
 	}
 	public int getId_etatcaisse() {
@@ -64,10 +64,10 @@ public class Etatdecaisse {
 		this.date_annulation = date_annulation;
 	}
 	public Date getDate_etatcaiise() {
-		return date_etatcaiise;
+		return date_etatcaisse;
 	}
-	public void setDate_etatcaiise(Date date_etatcaiise) {
-		this.date_etatcaiise = date_etatcaiise;
+	public void setDate_etatcaiise(Date date_etatcaisse) {
+		this.date_etatcaisse = date_etatcaisse;
 	}
 	public String getEtat() {
 		return etat;
@@ -84,7 +84,7 @@ public class Etatdecaisse {
 	@Override
 	public String toString() {
 		return "Etatdecaisse [id_etatcaisse=" + id_etatcaisse + ", date_validation=" + date_validation
-				+ ", date_annulation=" + date_annulation + ", date_etatcaiise=" + date_etatcaiise + ", etat=" + etat
+				+ ", date_annulation=" + date_annulation + ", date_etatcaiise=" + date_etatcaisse + ", etat=" + etat
 				+ ", id_USER=" + id_USER + "]";
 	}
 

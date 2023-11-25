@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id_USER;
+	private long id_USER;
 	
 	@Column(name="Nom")
     private String Nom;
@@ -38,10 +38,10 @@ public class User {
 	@Column(name="etat")
 	private String etat;
 	
-	public int getId_USER() {
+	public long getId_USER() {
 		return id_USER;
 	}
-	public void setId_USER(int id_USER) {
+	public void setId_USER(long id_USER) {
 		this.id_USER = id_USER;
 	}
 	public String getNom() {

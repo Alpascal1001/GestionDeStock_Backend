@@ -11,6 +11,8 @@ public interface UserService {
 	void deleteUser(User user);
 	void deleteUserById(Long id);
 	User getUser(Long id);
-	List<User> getAllUser();
+	List<User> getAllUsers();
+	User createUser(User user);
+	User getUserById(long id);
 
 }

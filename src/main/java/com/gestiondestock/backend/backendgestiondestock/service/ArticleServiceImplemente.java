@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gestiondestock.backend.backendgestiondestock.entity.Article;
 import com.gestiondestock.backend.backendgestiondestock.repo.ArticleRepository;
+import com.gestiondestock.backend.enumeration.ETAT_ARTICLE;
 
 
 public class ArticleServiceImplemente implements ArticleService {
@@ -28,14 +29,16 @@ public class ArticleServiceImplemente implements ArticleService {
 	@Override
 	public void deleteArticle(Article ar) {
 		// TODO Auto-generated method stub
-		articleRepository.delete(ar);
-		
+		ar.setEtat_article(ETAT_ARTICLE.SUPPRIME.name());
+		updateArticle(ar);
 	}
 
 	@Override
 	public void deleteArticleById(Long id) {
 		// TODO Auto-generated method stub
-		articleRepository.deleteById(id);
+		Article ar = getArticle(id);
+		ar.setEtat_article(ETAT_ARTICLE.SUPPRIME.name());
+		updateArticle(ar);
 	}
 
 	@Override

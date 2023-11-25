@@ -21,7 +21,7 @@ public class PromotionServiceImplemente implements PromotionService {
 	@Override
 	public Promotion updatePromotion(Promotion promo) {
 		// TODO Auto-generated method stub
-		return promotionRepository.save(promo);
+		return savePromotion(promo);
 	}
 
 	@Override
