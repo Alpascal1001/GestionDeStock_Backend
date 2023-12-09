@@ -15,4 +15,6 @@ public interface UserService {
 	User createUser(User user);
 	User getUserById(long id);
 
+	User blockedDate(Long id, String loginAgent);
+
 }

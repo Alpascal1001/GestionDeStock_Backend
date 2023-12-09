@@ -1,6 +1,8 @@
 package com.gestiondestock.backend.backendgestiondestock.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,22 @@ public class UserServiceImplemente implements UserService {
 	
 	@Autowired
 	UserRepository userRepository;
+
+	@Override
+	public User blockedDate(Long id, String loginAgent) {
+		Optional<User> user = userRepository.findById(id);
+		if (user.isEmpty())
+			return null;
+
+		User userTrouve = user.get();
+		userTrouve.setBlockedByAgent(loginAgent);
+		userTrouve.setBlockedDate(new Date());
+		userTrouve.setEtat(ETAT_USER.INACTIF.toString());
+
+		System.out.println("User blocked "+ userTrouve);
+		return userRepository.save(userTrouve);
+
+	}
 
 	@Override
 	public User saveUser(User user) {

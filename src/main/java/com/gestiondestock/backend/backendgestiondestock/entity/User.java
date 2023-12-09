@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.Date;
+
 @Entity
 @Table (name="user")
 public class User {
@@ -37,6 +39,21 @@ public class User {
 	
 	@Column(name="etat")
 	private String etat;
+	@Column(name = "createdAt")
+	private Date createdAt;
+
+	@Column(name = "BlockedDate")
+	private Date BlockedDate;
+	@Column(name = "UnblockedDate")
+	private  Date UnblockedDate;
+	@Column(name = "BlockedByAgent")
+	private  String BlockedByAgent;
+	@Column(name = "UnblockedByAgent")
+	private  String UnblockedByAgent;
+	@Column(name = "BlockedComment")
+	private	String BlockedComment;
+	@Column(name = "UnblockedComment")
+	private  String UnblockedComment;
 	
 	public long getId_USER() {
 		return id_USER;
@@ -114,7 +131,61 @@ public class User {
 				+ ", Contact=" + Contact + ", role=" + role + ", login=" + login + ", password=" + password + ", etat="
 				+ etat + "]";
 	}
-	
-	
-	
+
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getBlockedDate() {
+		return BlockedDate;
+	}
+
+	public void setBlockedDate(Date blockedDate) {
+		BlockedDate = blockedDate;
+	}
+
+	public Date getUnblockedDate() {
+		return UnblockedDate;
+	}
+
+	public void setUnblockedDate(Date unblockedDate) {
+		UnblockedDate = unblockedDate;
+	}
+
+	public String getBlockedByAgent() {
+		return BlockedByAgent;
+	}
+
+	public void setBlockedByAgent(String blockedByAgent) {
+		BlockedByAgent = blockedByAgent;
+	}
+
+	public String getUnblockedByAgent() {
+		return UnblockedByAgent;
+	}
+
+	public void setUnblockedByAgent(String unblockedByAgent) {
+		UnblockedByAgent = unblockedByAgent;
+	}
+
+	public String getBlockedComment() {
+		return BlockedComment;
+	}
+
+	public void setBlockedComment(String blockedComment) {
+		BlockedComment = blockedComment;
+	}
+
+	public String getUnblockedComment() {
+		return UnblockedComment;
+	}
+
+	public void setUnblockedComment(String unblockedComment) {
+		UnblockedComment = unblockedComment;
+	}
 }
