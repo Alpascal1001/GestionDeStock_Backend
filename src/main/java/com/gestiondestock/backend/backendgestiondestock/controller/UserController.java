@@ -12,6 +12,7 @@ import com.gestiondestock.backend.enumeration.ETAT_USER;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired
