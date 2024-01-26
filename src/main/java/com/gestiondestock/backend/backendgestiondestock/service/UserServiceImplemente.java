@@ -2,6 +2,7 @@ package com.gestiondestock.backend.backendgestiondestock.service;
 
 import com.gestiondestock.backend.backendgestiondestock.dto.BlockDto;
 import com.gestiondestock.backend.backendgestiondestock.dto.UnblockedDto;
+import com.gestiondestock.backend.backendgestiondestock.dto.UserDto;
 import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.repo.UserRepository;
 import com.gestiondestock.backend.enumeration.ETAT_USER;
@@ -59,6 +60,41 @@ public class UserServiceImplemente implements UserService {
     public User updateUser(User user) {
         // TODO Auto-generated method stub
         return userRepository.save(user);
+    }
+
+    @Override
+    public UserDto blockageUser(UserDto user) {
+        Optional<User> userFromDB = userRepository.findById(user.getIdUser());
+        if (userFromDB.isEmpty())
+            return null;
+
+        User userTrouve = userFromDB.get();
+        userTrouve.setBlockedByAgent(user.getLoginBlockedAgent());
+        userTrouve.setBlockedDate(new Date());
+        userTrouve.setUnblockedDate(user.getUnblockedDate());
+        userTrouve.setEtat(ETAT_USER.INACTIF.toString());
+        userTrouve.setBlockedComment(user.getComentBlockedAgent());
+
+        System.out.println("User blocked " + userTrouve);
+        userRepository.save(userTrouve);
+        return user;
+    }
+
+    @Override
+    public UserDto DeblockageUser(UserDto user) {
+        Optional<User> userFromDB = userRepository.findById(user.getIdUser());
+
+        if (userFromDB.isEmpty()) {
+            return null;
+        }
+
+        User userFound = userFromDB.get();
+        userFound.setUnblockedByAgent(user.getLoginUnblockedAgent());
+        userFound.setUnblockedDate(new Date());
+        userFound.setUnblockedComment(user.getComentUnBlockedAgent());
+        userFound.setEtat(ETAT_USER.ACTIF.toString());
+        userRepository.save(userFound);
+        return user;
     }
 
     @Override

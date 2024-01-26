@@ -42,6 +42,7 @@ class BackendgestiondestockApplicationTests {
     public void testListUser() {
         List<User> users = userRepository.findAll();
         if (users == null) {
+
         } else {
             for (User u : users) {
                 System.out.println(u.toString());

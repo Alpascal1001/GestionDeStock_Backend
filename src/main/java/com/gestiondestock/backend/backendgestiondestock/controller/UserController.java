@@ -2,6 +2,7 @@ package com.gestiondestock.backend.backendgestiondestock.controller;
 
 import com.gestiondestock.backend.backendgestiondestock.dto.BlockDto;
 import com.gestiondestock.backend.backendgestiondestock.dto.UnblockedDto;
+import com.gestiondestock.backend.backendgestiondestock.dto.UserDto;
 import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.service.UserService;
 import com.gestiondestock.backend.enumeration.ETAT_USER;
@@ -43,6 +44,18 @@ public class UserController {
     public User updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
+
+
+    @PostMapping("/blockageUser")
+    public UserDto blockageUser(@RequestBody UserDto user) {
+        return userService.blockageUser(user);
+    }
+
+    @PostMapping("/deBlockageUser")
+    public UserDto deBlockageUser(@RequestBody UserDto user) {
+        return userService.DeblockageUser(user);
+    }
+
 
     @DeleteMapping("/suprimeUser/{id}")
     public void deleteUser(@PathVariable long id) {
