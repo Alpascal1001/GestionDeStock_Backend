@@ -62,6 +62,7 @@ public class UserServiceImplemente implements UserService {
         return userRepository.save(user);
     }
 
+    //USAGE D'UN DTO
     @Override
     public UserDto blockageUser(UserDto user) {
         Optional<User> userFromDB = userRepository.findById(user.getIdUser());
@@ -122,7 +123,7 @@ public class UserServiceImplemente implements UserService {
     @Override
     public List<User> getAllUsers() {
         // TODO Auto-generated method stub
-        return userRepository.findAll();
+        return userRepository.findUserActifs();
     }
 
     @Override

@@ -34,6 +34,18 @@ public class UserController {
 
     @PostMapping("/createUser")
     public User createUser(@RequestBody User user) {
+
+        //Tester si l'utilisateur est null
+        if (user == null) {
+            throw new IllegalArgumentException("L'utilisateur passe en argument est null");
+        }
+
+        //Tester si l'utilisateur existe dejà pour ne pas le recreer
+        if (user.getId_USER() != 0) {
+            throw new IllegalArgumentException("L'etat de l'utilisateur ne permet pas de le créer");
+        }
+
+        //Tester si tout est ok
         user.setEtat(ETAT_USER.ACTIF.toString());
         user.setCreatedAt(new Date());
         System.out.println("User " + user);
@@ -46,6 +58,7 @@ public class UserController {
     }
 
 
+    //USAGE D'UN DTO
     @PostMapping("/blockageUser")
     public UserDto blockageUser(@RequestBody UserDto user) {
         return userService.blockageUser(user);
