@@ -16,5 +16,14 @@ public interface UserService {
 	User getUserById(long id);
 
 	User blockedDate(Long id, String loginAgent);
+	
+	User unblockedDate(Long id, String loginAgent);
+	
+	
+	
+	
+	
 
 }
+
+

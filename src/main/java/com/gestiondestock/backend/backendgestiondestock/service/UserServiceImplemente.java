@@ -32,6 +32,8 @@ public class UserServiceImplemente implements UserService {
 		return userRepository.save(userTrouve);
 
 	}
+	
+	
 
 	@Override
 	public User saveUser(User user) {
@@ -75,7 +77,8 @@ public class UserServiceImplemente implements UserService {
 	@Override
 	public User createUser(User user) {
 		// TODO Auto-generated method stub
-		return userRepository.save(user);
+		return saveUser(user);
+		// meme chose en faisant return userRepository.save(user)
 	}
 
 	@Override
@@ -83,5 +86,25 @@ public class UserServiceImplemente implements UserService {
 		// TODO Auto-generated method stub
 		return getUser(id);
 	}
+
+	
+
+
+
+	@Override
+	public User unblockedDate(Long id, String loginAgent) {
+		// TODO Auto-generated method stub
+		Optional <User>  user= userRepository.findById(id);
+		if (user.isEmpty())
+			return null;
+		User userfound = user.get();
+		userfound.setUnblockedDate(new Date());
+		userfound.setUnblockedByAgent(loginAgent);
+		userfound.setEtat(ETAT_USER.ACTIF.toString());
+		
+		System.out.println("User Unblocked "+ userfound);
+		return userRepository.save(userfound);
+	}
+
 
 }
