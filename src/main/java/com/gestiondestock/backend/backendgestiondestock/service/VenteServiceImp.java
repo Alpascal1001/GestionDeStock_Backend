@@ -9,6 +9,7 @@ import com.gestiondestock.backend.backendgestiondestock.repo.VenteRepository;
 import com.gestiondestock.backend.enumeration.ETAT_VENTE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -66,12 +67,14 @@ public class VenteServiceImp implements VenteService {
     }
 
     @Override
-    public Vente effectuerVente(List<VenteArticle> venteArticles) {
+    @Transactional
+    public Vente effectuerVente(List<VenteArticle> venteArticles, long idUser) {
         //creer la vente
 
         Vente v = new Vente();
         v.setDate_vente(new Date());
-        v.setEtat_vente(ETAT_VENTE.ACTIF.toString());
+        v.setEtat_vente(ETAT_VENTE.INACTIF.toString()); //à l'initial l'etat vente est innactif
+        v.setId_USER((int) idUser);
 
         v = venteRepository.save(v);
 
@@ -112,13 +115,15 @@ public class VenteServiceImp implements VenteService {
                 venteRepository.save(v);
                 throw new IllegalArgumentException(" L'article d'identifiant " + va.getId_article() + " n'est pas disponible avec la quantité souhaitée !!!");
             }
-            articleFound.setQte_dispo((int) (articleFound.getQte_dispo() - va.getQuantite_vente_article()));
 
+            articleFound.setQte_dispo((int) (articleFound.getQte_dispo() - va.getQuantite_vente_article()));
 
             //Ensuite sauvegarder
             articleRepository.save(articleFound);
-        }
 
+        }
+        //tout est ok
+        v.setEtat_vente(ETAT_VENTE.ACTIF.toString());
         //afficher la vente
         return v;
 
