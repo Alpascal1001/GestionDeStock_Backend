@@ -145,20 +145,6 @@ public class UserServiceImplemente implements UserService {
 
 
 
-	@Override
-	public User unblockedDate(Long id, String loginAgent) {
-		// TODO Auto-generated method stub
-		Optional <User>  user= userRepository.findById(id);
-		if (user.isEmpty())
-			return null;
-		User userfound = user.get();
-		userfound.setUnblockedDate(new Date());
-		userfound.setUnblockedByAgent(loginAgent);
-		userfound.setEtat(ETAT_USER.ACTIF.toString());
-		
-		System.out.println("User Unblocked "+ userfound);
-		return userRepository.save(userfound);
-	}
 
 
 }
