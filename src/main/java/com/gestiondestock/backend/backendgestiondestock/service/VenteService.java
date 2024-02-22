@@ -20,7 +20,7 @@ public interface VenteService {
 
     List<Vente> getAllVente();
 
-    Vente effectuerVente(List<VenteArticle> venteArticles);
+    Vente effectuerVente(List<VenteArticle> venteArticles, long idUser);
 
 
 }
