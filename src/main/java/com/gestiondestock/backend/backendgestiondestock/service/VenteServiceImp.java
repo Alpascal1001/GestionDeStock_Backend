@@ -84,7 +84,6 @@ public class VenteServiceImp implements VenteService {
             //setter l'id de la vente créée
             va.setId_vente(v.getId_vente());
             va.setEtat_vente_article(ETAT_VENTE.ACTIF.toString());
-
             //Enregistrer la vente d'articles effectuée
             venteArticleRepository.save(va);
 
@@ -118,12 +117,25 @@ public class VenteServiceImp implements VenteService {
 
             articleFound.setQte_dispo((int) (articleFound.getQte_dispo() - va.getQuantite_vente_article()));
 
+
+            //Recuperer la quantité et le prix de l'article et le multiplié pour ensuite le setter dans le total
+            //va.setTotal_vente_article(articleFound.getQte_dispo() * articleFound.getPrix());
+            va.setMontant_vente_article(articleFound.getPrix());
+
+            va.setTotal_vente_article(va.getQuantite_vente_article() * articleFound.getPrix());
+
+            //updateVente(v);
+            //enteArticleRepository.save(va);
+
+
             //Ensuite sauvegarder
             articleRepository.save(articleFound);
+
 
         }
         //tout est ok
         v.setEtat_vente(ETAT_VENTE.ACTIF.toString());
+
         //afficher la vente
         return v;
 

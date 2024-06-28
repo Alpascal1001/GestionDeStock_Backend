@@ -14,7 +14,7 @@ public class Article {
     String nom;
 
     @Column(name = "prix")
-    String prix;
+    float prix;
 
     @Column(name = "qte_dispo")
     int qte_dispo;
@@ -33,7 +33,7 @@ public class Article {
 
     }
 
-    public Article(String nom, String prix, int qte_dispo, String etat_article) {
+    public Article(String nom, float prix, int qte_dispo, String etat_article) {
         super();
         this.nom = nom;
         this.prix = prix;
@@ -57,11 +57,11 @@ public class Article {
         this.nom = nom;
     }
 
-    public String getPrix() {
+    public float getPrix() {
         return prix;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(float prix) {
         this.prix = prix;
     }
 

@@ -20,4 +20,7 @@ public interface ArticleService {
 
     List<Article> getAllArticle();
 
+    //Rechercher les articles par leurs noms
+    List<Article> searchArticlesByName(String nom);
+
 }

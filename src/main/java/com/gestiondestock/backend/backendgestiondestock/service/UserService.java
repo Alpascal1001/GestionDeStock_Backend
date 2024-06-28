@@ -34,4 +34,7 @@ public interface UserService {
 
     User unblockedDate(UnblockedDto unblockedUser);
 
+    //USER AUTHENTICATED
+    // User getAuthenticate();
+
 }

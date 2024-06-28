@@ -5,14 +5,18 @@ import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.repo.ArticleRepository;
 import com.gestiondestock.backend.backendgestiondestock.repo.UserRepository;
 import com.gestiondestock.backend.enumeration.ETAT_ARTICLE;
-import com.gestiondestock.backend.enumeration.ETAT_USER;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class ArticleServiceImplemente implements ArticleService {
 
     @Autowired
@@ -20,6 +24,22 @@ public class ArticleServiceImplemente implements ArticleService {
 
     @Autowired
     UserRepository userRepository;
+
+
+    //Functioin nous permettant de trouver l'utilisateur connecté
+    public User getAuthenticate() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("AUTH ::: {}", auth);
+        if (Objects.isNull(auth) || AnonymousAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
+            return null;
+        }
+        //
+        log.info("AUTH NAME::: {}", auth.getName());
+        Optional<User> userConnecte = userRepository.findByLogin(auth.getName());
+        log.info("USER CONNECT::: {}", userConnecte);
+
+        return userConnecte.orElse(null);
+    }
 
     @Override
     public Article saveArticle(Article ar) {
@@ -29,27 +49,22 @@ public class ArticleServiceImplemente implements ArticleService {
             throw new IllegalArgumentException("L'article fourni est null");
         }
 
-        //Tester si l'article est affecte à un utilisateur
-        if (ar.getId_USER() == 0) {
-            throw new IllegalArgumentException("L'article fourni doit etre raccorde à un utilisateur valide");
+
+        User userConnectSearch = getAuthenticate();
+
+        if (userConnectSearch == null) {
+            throw new IllegalArgumentException("user not found !");
         }
 
-        //chercher l'existence de l'utilisateur dans la base de donnee
-        Optional<User> userFound = userRepository.findById((long) ar.getId_USER()); //recherche de la category            //transtypage primitif en primitif
 
-        //Tester si l'utlisateur existe
-        if (userFound.isEmpty()) {
-            throw new IllegalArgumentException("L'utilisateur fourni n'existe pas !!!");
-        }
+        User userConnectSearchFound = userConnectSearch;
 
-        //System.out.println(userFound.get());
+        //affecter à l'article l'utilisateur qui l'a connecté !
+        ar.setId_USER((int) userConnectSearchFound.getId_USER());
 
-        //Test si l'article est affecté à un utilisateur actif
-        if (!userFound.get().getEtat().equals(ETAT_USER.ACTIF.toString())) {
-            throw new IllegalArgumentException(" L'utilisateur fourni doit etre actif !!! ");
-        }
 
         ar.setEtat_article(ETAT_ARTICLE.ACTIF.name());
+
         return articleRepository.save(ar);
 
     }
@@ -85,6 +100,14 @@ public class ArticleServiceImplemente implements ArticleService {
     public List<Article> getAllArticle() {
         // TODO Auto-generated method stub
         return articleRepository.findAll();
+    }
+
+
+    //Rechercher les articles par leurs noms
+    @Override
+    public List<Article> searchArticlesByName(String nom) {
+
+        return articleRepository.findByNomStartsWith(nom);
     }
 
 }

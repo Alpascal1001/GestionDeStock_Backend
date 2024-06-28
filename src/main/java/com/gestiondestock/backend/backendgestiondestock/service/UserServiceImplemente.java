@@ -6,6 +6,7 @@ import com.gestiondestock.backend.backendgestiondestock.dto.UserDto;
 import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.repo.UserRepository;
 import com.gestiondestock.backend.enumeration.ETAT_USER;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class UserServiceImplemente implements UserService {
     @Autowired
     UserRepository userRepository;
@@ -137,5 +139,24 @@ public class UserServiceImplemente implements UserService {
         // TODO Auto-generated method stub
         return getUser(id);
     }
+
+
+    /**
+     * FUNCTION TO GET USER AUTHENTICATED
+     */
+
+    /*public User getAuthenticate() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("AUTH ::: {}", auth);
+        if (Objects.isNull(auth) || AnonymousAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
+            return null;
+        }
+        //
+        log.info("AUTH NAME::: {}", auth.getName());
+        Optional<User> userConnecte = userRepository.findByLogin(auth.getName());
+        log.info("USER CONNECT::: {}", userConnecte);
+
+        return userConnecte.orElse(null);
+    }*/
 
 }
