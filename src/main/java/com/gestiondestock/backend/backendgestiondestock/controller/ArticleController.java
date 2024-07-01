@@ -32,6 +32,14 @@ public class ArticleController {
         return articleService.updateArticle(article);
     }
 
+    @PutMapping("updateArticle/{id}/updated")
+    public ResponseEntity<String> updateArticleById(@PathVariable Long id, @RequestBody Article article) {
+
+        articleService.updateArticleById(id, article);
+
+        return ResponseEntity.ok().body("Article d'identifiant " + id + " Modifié avec succès !!!");
+    }
+
     @DeleteMapping("articles/deleteArticle/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable Long id) {
         try {
@@ -41,6 +49,15 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
+    }
+
+
+    @GetMapping("article/{id}/detail")
+    public ResponseEntity<Article> getAritcleById(@PathVariable Long id) {
+
+        Article myOneArticle = articleService.getArticle(id);
+
+        return ResponseEntity.ok(myOneArticle);
     }
 
     //Rechercher les articles par leurs noms

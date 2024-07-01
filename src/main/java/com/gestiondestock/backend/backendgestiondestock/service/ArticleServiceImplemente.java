@@ -5,6 +5,7 @@ import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.repo.ArticleRepository;
 import com.gestiondestock.backend.backendgestiondestock.repo.UserRepository;
 import com.gestiondestock.backend.enumeration.ETAT_ARTICLE;
+import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @Log4j2
+@ToString
 public class ArticleServiceImplemente implements ArticleService {
 
     @Autowired
@@ -73,6 +75,23 @@ public class ArticleServiceImplemente implements ArticleService {
     public Article updateArticle(Article ar) {
         // TODO Auto-generated method stub
         return articleRepository.save(ar);
+    }
+
+    @Override
+    public Article updateArticleById(Long id, Article article) {
+        Optional<Article> articleSearchUp = articleRepository.findById(id);
+
+        if (articleSearchUp.isEmpty()) {
+            return null;
+        }
+
+        Article articleFound = articleSearchUp.get();
+        articleFound.setNom(article.getNom());
+        articleFound.setPrix(article.getPrix());
+        articleFound.setQte_dispo(article.getQte_dispo());
+
+        System.out.println(article);
+        return articleRepository.save(articleFound);
     }
 
     @Override
