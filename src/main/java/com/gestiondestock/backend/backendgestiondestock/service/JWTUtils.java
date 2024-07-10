@@ -1,8 +1,11 @@
 package com.gestiondestock.backend.backendgestiondestock.service;
 
+import com.gestiondestock.backend.backendgestiondestock.entity.User;
+import com.gestiondestock.backend.backendgestiondestock.repo.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,8 @@ public class JWTUtils {
 
     private static final long EXPIRATION_TIME = 86400000; //60000 = 1mn; //86400000 = 24hours or 86400000 milisecs
     private final SecretKey key;
+    @Autowired
+    private UserRepository userRepository;
 
     public JWTUtils() {
         String secretString = "843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3";
@@ -29,10 +34,15 @@ public class JWTUtils {
     }
 
     public String generateToken(UserDetails userDetails) {
+        User userSearched = userRepository.findByLogin(userDetails.getUsername()).get();
         //String uniqueId = UUID.randomUUID().toString(); // Générer un identifiant unique
         return Jwts.builder()
                 //.setId(uniqueId) // Inclure l'identifiant unique dans le jeton
                 .subject(userDetails.getUsername())
+                .claim("prenom", userSearched.getPrenom())
+                .claim("nom", userSearched.getNom())
+                .claim("role", userSearched.getRole())
+                .claim("contact", userSearched.getContact())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)

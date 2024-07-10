@@ -3,17 +3,14 @@ package com.gestiondestock.backend.backendgestiondestock.service;
 import com.gestiondestock.backend.backendgestiondestock.entity.Article;
 import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.repo.ArticleRepository;
-import com.gestiondestock.backend.backendgestiondestock.repo.UserRepository;
+import com.gestiondestock.backend.backendgestiondestock.service.getUserAuth.GetUserAuthService;
 import com.gestiondestock.backend.enumeration.ETAT_ARTICLE;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,23 +22,8 @@ public class ArticleServiceImplemente implements ArticleService {
     ArticleRepository articleRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private GetUserAuthService getAuthenticate;
 
-
-    //Functioin nous permettant de trouver l'utilisateur connecté
-    public User getAuthenticate() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        log.info("AUTH ::: {}", auth);
-        if (Objects.isNull(auth) || AnonymousAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
-            return null;
-        }
-        //
-        log.info("AUTH NAME::: {}", auth.getName());
-        Optional<User> userConnecte = userRepository.findByLogin(auth.getName());
-        log.info("USER CONNECT::: {}", userConnecte);
-
-        return userConnecte.orElse(null);
-    }
 
     @Override
     public Article saveArticle(Article ar) {
@@ -52,7 +34,7 @@ public class ArticleServiceImplemente implements ArticleService {
         }
 
 
-        User userConnectSearch = getAuthenticate();
+        User userConnectSearch = getAuthenticate.getAuthenticate();
 
         if (userConnectSearch == null) {
             throw new IllegalArgumentException("user not found !");

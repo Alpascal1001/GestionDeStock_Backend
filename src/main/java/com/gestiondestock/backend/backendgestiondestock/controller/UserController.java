@@ -5,6 +5,7 @@ import com.gestiondestock.backend.backendgestiondestock.dto.UnblockedDto;
 import com.gestiondestock.backend.backendgestiondestock.dto.UserDto;
 import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.service.UserService;
+import com.gestiondestock.backend.backendgestiondestock.service.VenteService;
 import com.gestiondestock.backend.enumeration.ETAT_USER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,14 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/users")
+@RequestMapping(value = "api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VenteService venteService;
 
 
     @GetMapping("/List_users")

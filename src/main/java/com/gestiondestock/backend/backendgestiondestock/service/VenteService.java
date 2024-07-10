@@ -12,6 +12,8 @@ public interface VenteService {
 
     Vente updateVente(Vente v);
 
+    Vente upddateVenteById(Long id, Vente vente);
+
     void deleteVente(Vente v);
 
     void deleteVenteById(Long id);
@@ -20,7 +22,8 @@ public interface VenteService {
 
     List<Vente> getAllVente();
 
-    Vente effectuerVente(List<VenteArticle> venteArticles, long idUser);
+    // Vente effectuerVente(List<VenteArticle> venteArticles, long idUser);
+    Vente effectuerVente(List<VenteArticle> venteArticles);
 
 
 }

@@ -1,11 +1,14 @@
 package com.gestiondestock.backend.backendgestiondestock.service;
 
 import com.gestiondestock.backend.backendgestiondestock.entity.Article;
+import com.gestiondestock.backend.backendgestiondestock.entity.User;
 import com.gestiondestock.backend.backendgestiondestock.entity.Vente;
 import com.gestiondestock.backend.backendgestiondestock.entity.VenteArticle;
 import com.gestiondestock.backend.backendgestiondestock.repo.ArticleRepository;
 import com.gestiondestock.backend.backendgestiondestock.repo.VenteArticleRepository;
 import com.gestiondestock.backend.backendgestiondestock.repo.VenteRepository;
+import com.gestiondestock.backend.backendgestiondestock.service.getUserAuth.GetUserAuthService;
+import com.gestiondestock.backend.enumeration.ETAT_USER;
 import com.gestiondestock.backend.enumeration.ETAT_VENTE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,9 @@ public class VenteServiceImp implements VenteService {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    private GetUserAuthService getUserAuthService;
+
     @Override
     public Vente saveVente(Vente v) {
         // TODO Auto-generated method stub
@@ -38,6 +44,23 @@ public class VenteServiceImp implements VenteService {
         // TODO Auto-generated method stub
         return saveVente(v);
     }
+
+    @Override
+    public Vente upddateVenteById(Long id, Vente vente) {
+        Optional<Vente> venteSearched = venteRepository.findById(id);
+
+        if (venteSearched.isEmpty()) {
+            return null;
+        }
+
+        Vente venteFound = venteSearched.get();
+        venteFound.setDate_vente(vente.getDate_vente());
+        venteFound.setDate_annulation(vente.getDate_annulation());
+        venteFound.setEtat_vente(vente.getEtat_vente());
+
+        return venteFound;
+    }
+
 
     @Override
     public void deleteVente(Vente v) {
@@ -68,13 +91,25 @@ public class VenteServiceImp implements VenteService {
 
     @Override
     @Transactional
-    public Vente effectuerVente(List<VenteArticle> venteArticles, long idUser) {
+    public Vente effectuerVente(List<VenteArticle> venteArticles) {
         //creer la vente
 
         Vente v = new Vente();
         v.setDate_vente(new Date());
         v.setEtat_vente(ETAT_VENTE.INACTIF.toString()); //à l'initial l'etat vente est innactif
-        v.setId_USER((int) idUser);
+
+        User userAuthSearchFound = getUserAuthService.getAuthenticate();
+        if (userAuthSearchFound == null) {
+            return null;
+        }
+
+        //Recuperer l'identifiant de l'utilisateur connecté !
+        v.setId_USER((int) userAuthSearchFound.getId_USER());
+
+        //Tester si l'utilisateur est Actif
+        if (!userAuthSearchFound.getEtat().equals(ETAT_USER.ACTIF.toString())) {
+            throw new IllegalArgumentException("L'utilisateur Connecté doit etre " + ETAT_USER.ACTIF);
+        }
 
         v = venteRepository.save(v);
 
