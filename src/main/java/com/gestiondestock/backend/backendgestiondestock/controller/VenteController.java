@@ -70,4 +70,14 @@ public class VenteController {
     public void deleteVente(@PathVariable Long id) {
         venteService.deleteVenteById(id);
     }
+
+
+    @GetMapping("/vente/{id}/detail")
+    public ResponseEntity<Vente> detailVente(@PathVariable Long id) {
+        Vente getVente = venteService.getVente(id);
+
+        return ResponseEntity.ok(getVente);
+    }
+
+
 }
